@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <stdint.h>
+#include <MiniFB.h>
  
 int16_t ROM32K[20000];
 int16_t RAM16K[20000];

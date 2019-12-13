@@ -1,3 +1,8 @@
+# IntelliJ
+cmake-build-*
+.idea
+
+
 # Prerequisites
 *.d
 
