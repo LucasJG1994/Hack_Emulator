@@ -11,12 +11,13 @@ int main(){
 	setInstr(&vm, 0, OUT_D, IN_A);
 	setInstr(&vm, 0, OUT_A, IN_D);
 	setInstr(&vm, 0, OUT_M, ONE);
-	setInstr(&vm, 0, OUT_D, D_p_1); //ROM gets edited at this opcode.
+	setInstr(&vm, 0, OUT_D, D_p_1);
 	setValue(&vm, 2);
 	setInstr(&vm, JMP, 0, ZERO);
 	reset(&vm);
 	
 	do {
+		vm.RAM[24576] = keys;
 		if(vm.state == OK){
 			vm.state = compute(&vm);
 			//DEBUG CODE

@@ -3,6 +3,7 @@
 const int palette[2] = {0,255}; //Color palette for the screen
 //Look up table for the individual bits, 16 bit width
 const int table[16] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
+int keys;
 
 //Constructs the opcode.
 void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
@@ -14,22 +15,18 @@ void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
 	_vm->ROM[_vm->IP++] = instruction;
 }
 
-//Inserts a value into ROM
 void setValue(vm_t* _vm, u16 value){
 	_vm->ROM[_vm->IP++] = value;
 }
 
-//Function might be removed
 u16 getInstr(vm_t* _vm){
 	return _vm->ROM[_vm->IP++];
 }
 
-//Reset IP
 void reset(vm_t* _vm){
 	_vm->IP = 0;
 }
 
-//Init the window.
 void init(vm_t* _vm){
 	_vm->window = mfb_open_ex("Hack Computer", w_width, w_height, WF_RESIZABLE);
 	
@@ -37,25 +34,41 @@ void init(vm_t* _vm){
 		printf("Failed to open window\n");
 		exit(0);
 	}
+	
+	mfb_set_keyboard_callback(_vm->window, keyboard);
+	mfb_set_char_input_callback(_vm->window, char_input);
+}
+
+void keyboard(struct Window* window, Key key, KeyMod mod, bool isPressed){
+	if(isPressed){
+		//Do nothing with (keys)
+	}
+	else{
+		keys = 0;
+	}
+	if(key == KB_KEY_ESCAPE){
+		mfb_close(window);
+		exit(0);
+	}
+}
+
+void char_input(struct Window* window, unsigned int charCode){
+	keys = charCode;
 }
 
 int compute(vm_t* _vm){
 	if(_vm->IP > 32767) return CPU_HALT;
 	
-	u16 instruction = _vm->ROM[_vm->IP++];
-	
-	//DEBUG CODE
-	//printf("INSTRUCTION: %d\n", instruction); //DEBUG CODE
+	u16 instruction = _vm->ROM[_vm->IP++]; //Fectch OPcode
 	
 	if(!(instruction & 0x8000)){
 		_vm->A = instruction;
 	}
 	else{
+		//Decode instruction
 		u8 comp = (instruction & 0x1fc0) >> 6;
 		u8 dest = (instruction & 0x0038) >> 3;
 		u8 jump = (instruction & 0x0007) >> 0;
-		
-		//printf("JUMP: %d DEST: %d COMP: %d\n",jump, dest, comp); //DEBUG CODE
 		
 		if((comp & 0x40) || (dest & 0x01))
 			if((_vm->A < 0) || (_vm->A > 24576)){
