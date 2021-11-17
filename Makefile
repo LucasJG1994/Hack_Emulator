@@ -217,29 +217,29 @@ lib/minifb/src/windows/WinMiniFB.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.s
 .PHONY : lib/minifb/src/windows/WinMiniFB.c.s
 
-src/byte.obj: src/byte.c.obj
-.PHONY : src/byte.obj
+src/main.obj: src/main.c.obj
+.PHONY : src/main.obj
 
 # target to build an object file
-src/byte.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/byte.c.obj
-.PHONY : src/byte.c.obj
+src/main.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/main.c.obj
+.PHONY : src/main.c.obj
 
-src/byte.i: src/byte.c.i
-.PHONY : src/byte.i
+src/main.i: src/main.c.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-src/byte.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/byte.c.i
-.PHONY : src/byte.c.i
+src/main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/main.c.i
+.PHONY : src/main.c.i
 
-src/byte.s: src/byte.c.s
-.PHONY : src/byte.s
+src/main.s: src/main.c.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-src/byte.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/byte.c.s
-.PHONY : src/byte.c.s
+src/main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/main.c.s
+.PHONY : src/main.c.s
 
 src/vm.obj: src/vm.c.obj
 .PHONY : src/vm.obj
@@ -282,9 +282,9 @@ help:
 	@echo ... lib/minifb/src/windows/WinMiniFB.obj
 	@echo ... lib/minifb/src/windows/WinMiniFB.i
 	@echo ... lib/minifb/src/windows/WinMiniFB.s
-	@echo ... src/byte.obj
-	@echo ... src/byte.i
-	@echo ... src/byte.s
+	@echo ... src/main.obj
+	@echo ... src/main.i
+	@echo ... src/main.s
 	@echo ... src/vm.obj
 	@echo ... src/vm.i
 	@echo ... src/vm.s

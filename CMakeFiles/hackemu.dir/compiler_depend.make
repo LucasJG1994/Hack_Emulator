@@ -190,7 +190,7 @@ CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj: lib/minifb/src/wi
   C:/TDM-GCC-64/x86_64-w64-mingw32/include/mcx.h \
   C:/TDM-GCC-64/x86_64-w64-mingw32/include/imm.h
 
-CMakeFiles/hackemu.dir/src/byte.c.obj: src/byte.c \
+CMakeFiles/hackemu.dir/src/main.c.obj: src/main.c \
   src/vm.h \
   src/common.h \
   C:/TDM-GCC-64/x86_64-w64-mingw32/include/stdio.h \
@@ -629,7 +629,7 @@ C:/TDM-GCC-64/x86_64-w64-mingw32/include/winsvc.h:
 
 C:/TDM-GCC-64/x86_64-w64-mingw32/include/mcx.h:
 
-src/byte.c:
+src/main.c:
 
 src/vm.h:
 

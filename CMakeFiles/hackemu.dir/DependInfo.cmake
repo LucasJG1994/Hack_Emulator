@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/lib/minifb/src/windows/WinMiniFB.c" "CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj" "gcc" "CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj.d"
-  "C:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/src/byte.c" "CMakeFiles/hackemu.dir/src/byte.c.obj" "gcc" "CMakeFiles/hackemu.dir/src/byte.c.obj.d"
+  "C:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/src/main.c" "CMakeFiles/hackemu.dir/src/main.c.obj" "gcc" "CMakeFiles/hackemu.dir/src/main.c.obj.d"
   "C:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/src/vm.c" "CMakeFiles/hackemu.dir/src/vm.c.obj" "gcc" "CMakeFiles/hackemu.dir/src/vm.c.obj.d"
   )
 

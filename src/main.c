@@ -1,20 +1,10 @@
 #include "vm.h"
-/*TEST FILE*/
-int main(){
+
+int main(int argc, char** argv){
 	UpdateState state;
 	vm_t vm = {0};
 	
 	init(&vm);
-	
-	//Test code for the VM
-	setValue(&vm, 24500);
-	setInstr(&vm, 0, OUT_D, IN_A);
-	setInstr(&vm, 0, OUT_A, IN_D);
-	setInstr(&vm, 0, OUT_M, ONE);
-	setInstr(&vm, 0, OUT_D, D_p_1);
-	setValue(&vm, 2);
-	setInstr(&vm, JMP, 0, ZERO);
-	reset(&vm);
 	
 	do {
 		vm.RAM[24576] = keys;
