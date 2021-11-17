@@ -14,7 +14,7 @@ typedef struct{
 	int state; //Used for storeing the VM states
 	
 	u16 ROM[32768];
-	s16 RAM[24578];
+	s16 RAM[24577];
 	s16 A,D;
 	s16 BUS;
 	u16 IP;

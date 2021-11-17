@@ -20,7 +20,7 @@ int main(){
 		if(vm.state == OK){
 			vm.state = compute(&vm);
 			//DEBUG CODE
-			printf("A: %d D: %d M: %d IP: %d BUS: %d ROM: %d\n", vm.A, vm.D, vm.RAM[vm.A], vm.IP, vm.BUS, vm.ROM[4]);
+			//printf("A: %d D: %d M: %d IP: %d BUS: %d ROM: %d\n", vm.A, vm.D, vm.RAM[vm.A], vm.IP, vm.BUS, vm.ROM[4]);
 			//VM state feedback
 			switch(vm.state){
 				case INVALID_COMP: printf("Error: Invalid comp opcode\n"); break;

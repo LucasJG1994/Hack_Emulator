@@ -1,8 +1,10 @@
 #include "vm.h"
 
-const int palette[2] = {0,255};
+const int palette[2] = {0,255}; //Color palette for the screen
+//Look up table for the individual bits, 16 bit width
 const int table[16] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
 
+//Constructs the opcode.
 void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
 	u16 instruction = 0;
 	instruction |= _jump;
@@ -12,18 +14,22 @@ void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
 	_vm->ROM[_vm->IP++] = instruction;
 }
 
+//Inserts a value into ROM
 void setValue(vm_t* _vm, u16 value){
 	_vm->ROM[_vm->IP++] = value;
 }
 
+//Function might be removed
 u16 getInstr(vm_t* _vm){
 	return _vm->ROM[_vm->IP++];
 }
 
+//Reset IP
 void reset(vm_t* _vm){
 	_vm->IP = 0;
 }
 
+//Init the window.
 void init(vm_t* _vm){
 	_vm->window = mfb_open_ex("Hack Computer", w_width, w_height, WF_RESIZABLE);
 	
@@ -38,7 +44,8 @@ int compute(vm_t* _vm){
 	
 	u16 instruction = _vm->ROM[_vm->IP++];
 	
-	printf("INSTRUCTION: %d\n", instruction);
+	//DEBUG CODE
+	//printf("INSTRUCTION: %d\n", instruction); //DEBUG CODE
 	
 	if(!(instruction & 0x8000)){
 		_vm->A = instruction;
@@ -48,7 +55,7 @@ int compute(vm_t* _vm){
 		u8 dest = (instruction & 0x0038) >> 3;
 		u8 jump = (instruction & 0x0007) >> 0;
 		
-		printf("JUMP: %d DEST: %d COMP: %d\n",jump, dest, comp);
+		//printf("JUMP: %d DEST: %d COMP: %d\n",jump, dest, comp); //DEBUG CODE
 		
 		if((comp & 0x40) || (dest & 0x01))
 			if((_vm->A < 0) || (_vm->A > 24576)){
@@ -141,8 +148,10 @@ int compute(vm_t* _vm){
 			case 0: break;
 		}
 		
+		//IF the destination is M and the A register is in the range of 
+		//screen memory. Draw what is in that RAM location to the screen.
 		if(dest & 0x01)
-			if(_vm->A >= 16384 && _vm->A <= 24576){
+			if(_vm->A >= 16384 && _vm->A < 24576){
 				for(int i = 0; i < 16; i++){
 					_vm->buffer[(_vm->A - 16384) * 16 + i] = MFB_RGB(
 					palette[(_vm->RAM[_vm->A] & table[i]) >> i],
