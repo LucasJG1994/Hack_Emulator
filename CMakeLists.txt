@@ -11,10 +11,13 @@ add_subdirectory (lib/minifb)
 # Bring the headers for MiniFB into the project
 include_directories(
         lib/minifb/include
+	lib/minifb/src
 )
 
 add_executable (hackemu
         ${hackemu_SOURCE_DIR}/src/byte.c
+	${hackemu_SOURCE_DIR}/src/vm.c
+	${hackemu_SOURCE_DIR}/lib/minifb/src/windows/WinMiniFB.c
 )
 
 target_link_libraries(hackemu minifb)
