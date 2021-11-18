@@ -4,19 +4,19 @@ Add Keyboard input. (DONE)
 
 Create an assembler for the hack assembler.
 
-Started working on the assembler
-	Scanner (COMPLETE)
-		Implement scanner functions. (DONE)
-		Initialize the DFA. (DONE)
-		Create function for checking ID name/numbers using DFA. (DONE)
-		Create list functions for storing the tokens. (DONE)
+- Started working on the assembler
+	- Scanner (COMPLETE)
+		- Implement scanner functions. (DONE)
+		- Initialize the DFA. (DONE)
+		- Create function for checking ID name/numbers using DFA. (DONE)
+		- Create list functions for storing the tokens. (DONE)
 
-	Parser
-		implement parser functions.
-		Create 2 Lists, 1 for label declaration and the other for lost labels.
-		Create Parser Rules.
+	- Parser
+		- implement parser functions.
+		- Create 2 Lists, 1 for label declaration and the other for lost labels.
+		- Create Parser Rules.
 
-**ISSUES**
+### ISSUES
 ROM array is somehow being edited during code execution. (FIXED)
 The VM was drawing past the screen's max buffer size which was
 rewriting the data in the ROM which was placed after the 
@@ -26,20 +26,20 @@ screen's buffer within the struct (vm_t).
 
 
 (Code Refactoring needed)
-1) refactor code in main.c
-	refactor getchar() code
-	put test code into it's own test.c file
-	deal with naming convention. More readable names!
-	VM should handle its own state
-	implement a vm_cleanup() function
-	methods should use namespace prefix
-	use enums than #define
-	all caps for const varaibles
-	global variable (keys) must be protected.
-	!(instruction & 0x8000) -> 0 == (instruction & 0x8000) -> 0 == (instruction & MASK_OPCODE)
-	MAGIC numbers referring to over use of case statements. Would be better handling them better in a file.
-	blocks without braces avoid it.
-	arguments put on new lines should be indented.
+1. refactor code in main.c
+	- refactor getchar() code
+	- put test code into it's own test.c file
+	- deal with naming convention. More readable names!
+	- VM should handle its own state
+	- implement a vm_cleanup() function
+	- methods should use namespace prefix
+	- use enums than #define
+	- all caps for const varaibles
+	- global variable (keys) must be protected.
+	- !(instruction & 0x8000) -> 0 == (instruction & 0x8000) -> 0 == (instruction & MASK_OPCODE)
+	- MAGIC numbers referring to over use of case statements. Would be better handling them better in a file.
+	- blocks without braces avoid it.
+	- arguments put on new lines should be indented.
 	
-2) refactor code in HackScanner.c
-	Replace the usage of linked lists. Find a better data structure, chunk lists (Look it up)
+2. refactor code in HackScanner.c
+	- Replace the usage of linked lists. Find a better data structure, chunk lists (Look it up)
