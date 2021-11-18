@@ -98,7 +98,7 @@ void printToken(hackToken_t token){
 
 list_t getHackLabels(hackScanner_t* scan){
 	int length = 0;
-	char lexeme[50];
+	char lexeme[50]; //This will probably be removed.
 	list_t list = {NULL};
 	DFA_t dfa = {0};
 	
@@ -125,8 +125,8 @@ list_t getHackLabels(hackScanner_t* scan){
 				return list;
 			}
 			
-			sprintf(lexeme, "%.*s", length, scan->start);
-			checkID(&dfa, lexeme, length);
+			sprintf(lexeme, "%.*s", length, scan->start); //Might not be needed.
+			checkID(&dfa, lexeme, length); //scan->start with length could be used instead of lexeme.
 			
 			if(dfa.state == START_STATE || dfa.state == NUMBER || dfa.state == ERROR_STATE){
 				freeList(&list);
@@ -145,8 +145,8 @@ list_t getHackLabels(hackScanner_t* scan){
 
 list_t lexer(hackScanner_t* scan, list_t* labels){
 	int length = 0;
-	char lexeme[50];
-	list_t list = {NULL};
+	char lexeme[50]; //Might not be needed.
+	list_t list = {NULL}; //Used to store the tokens.
 	DFA_t dfa = {0};
 	
 	initDFA(&dfa);
@@ -192,8 +192,8 @@ list_t lexer(hackScanner_t* scan, list_t* labels){
 					return list;
 				}
 				
-				sprintf(lexeme, "%.*s", length, scan->start);
-				checkID(&dfa, lexeme, length);
+				sprintf(lexeme, "%.*s", length, scan->start); //Might not be needed.
+				checkID(&dfa, lexeme, length); //scan->start and length can replace lexeme
 				
 				if(dfa.state == START_STATE || dfa.state == NUMBER || dfa.state == ERROR_STATE){
 					freeList(&list);

@@ -8,6 +8,10 @@ int main(int argc, char** argv){
 	list_t tokens = {NULL};
 	list_t labels = {NULL};
 	
+	/*
+		TEST CODE
+	*/
+	//=================================
 	const char* code = "(end)\n\
 	(foo1)\
 	@end\n\
@@ -45,6 +49,8 @@ int main(int argc, char** argv){
 	
 	freeList(&labels);
 	freeList(&tokens);
+	
+	//=================================
 	
 	init(&vm);
 	

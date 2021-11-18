@@ -51,6 +51,7 @@ typedef struct{
 }list_t;
 
 //string function
+//Made this as an easy way to deal with string comparison.
 int stringcmp(const char* lex1, int len1, const char* lex2, int len2);
 
 //Scanner function
@@ -62,6 +63,9 @@ char curS(hackScanner_t* scan);
 int matchS(hackScanner_t* scan, char c);
 hackToken_t makeToken(int type, const char* lexeme, int length, int line);
 void printToken(hackToken_t token);
+
+//Gets all the labels first before going through the code.
+//Helps with the differentiating between variable and label.
 list_t getHackLabels(hackScanner_t* scan);
 list_t lexer(hackScanner_t* scan, list_t* labels);
 
