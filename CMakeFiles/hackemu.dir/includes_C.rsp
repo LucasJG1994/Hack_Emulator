@@ -1,1 +1,1 @@
--IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/lib/minifb/include -IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/lib/minifb/src
+-IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/lib/minifb/include -IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/lib/minifb/src -IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/src/Hack_asm -IC:/Users/FUZEdevLG/Documents/GitHub/Hack_Emulator/src

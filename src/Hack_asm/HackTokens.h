@@ -10,10 +10,13 @@
 #define TK_EQ 7   //=
 #define TK_ADD 8  //+
 #define TK_SUB 9  //-
-#define TK_LP 10  //(
-#define TK_RP 11  //)
+#define TK_ID 10  //(
+#define TK_LABEL 11  //)
 #define TK_AND 12 //&
 #define TK_OR 13  //|
 #define TK_BAN 14 //!
+#define TK_NUM 15 //number
+#define TK_SEMI 16 //;
+#define TK_EOF -1
 
 #endif

@@ -13,11 +13,13 @@ include_directories(
         lib/minifb/include
 	lib/minifb/src
 	src/Hack_asm
+	src
 )
 
 add_executable (hackemu
         ${hackemu_SOURCE_DIR}/src/main.c
 	${hackemu_SOURCE_DIR}/src/vm.c
+	${hackemu_SOURCE_DIR}/src/Hack_asm/HackScanner.c
 	${hackemu_SOURCE_DIR}/lib/minifb/src/windows/WinMiniFB.c
 )
 

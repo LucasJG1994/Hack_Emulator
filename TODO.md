@@ -5,11 +5,16 @@ Add Keyboard input. (DONE)
 Create an assembler for the hack assembler.
 
 Started working on the assembler:
-	Scanner:
-		Implement scanner functions.
-		Initialize the DFA.
-		Create function for checking ID name/numbers using DFA.
-		Create list functions for storing the tokens.
+	Scanner: (COMPLETE)
+		Implement scanner functions. (DONE)
+		Initialize the DFA. (DONE)
+		Create function for checking ID name/numbers using DFA. (DONE)
+		Create list functions for storing the tokens. (DONE)
+
+	Parser:
+		implement parser functions.
+		Create 2 Lists, 1 for label declaration and the other for lost labels.
+		Create Parser Rules.
 
 **ISSUES**
 ROM array is somehow being edited during code execution. (FIXED)
