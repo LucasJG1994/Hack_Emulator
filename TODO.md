@@ -33,7 +33,7 @@ screen's buffer within the struct (vm_t).
 	- [x] VM should handle its own state
 	- [ ] implement a vm_cleanup() function
 	- [x] methods should use namespace prefix
-	- [x] use enums than #define
+	- [ ] use enums than #define
 	- [x] all caps for const varaibles
 	- [ ] global variable (keys) must be protected.
 	- [ ] !(instruction & 0x8000) -> 0 == (instruction & 0x8000) -> 0 == (instruction & MASK_OPCODE)
