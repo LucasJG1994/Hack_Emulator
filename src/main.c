@@ -3,10 +3,6 @@
 
 int main(int argc, char** argv){
 	UpdateState state;
-	vm_t vm = {0};
-	hackScanner_t scan = {NULL};
-	list_t tokens = {NULL};
-	list_t labels = {NULL};
 	
 	/*
 		TEST CODE
@@ -21,49 +17,46 @@ int main(int argc, char** argv){
 	amd=-1\n\
 	@54321\0";
 	
-	initS(&scan, code);
-	labels = getHackLabels(&scan);
+	struct hackScanner scan = hackScanner_init(code);
+	struct list labels = hackScanner_labels(&scan);
 	
 	if(scan.error != SCAN_OK){
-		freeList(&labels);
+		list_destroy(&labels);
 		printf("Invalid ID\n");
-		getchar();
 		return 0;
 	}
 	
-	resetS(&scan);
+	hackScanner_reset(&scan);
 	
-	tokens = lexer(&scan, &labels);
+	struct list tokens = hackScanner_lexer(&scan, &labels);
 	
 	if(scan.error != SCAN_OK){
-		freeList(&labels);
-		freeList(&tokens);
+		list_destroy(&labels);
+		list_destroy(&tokens);
 		printf("Error in code");
-		getchar();
 		return 0;
 	}
 	
-	printList(&labels);
-	printf("\n");
-	printList(&tokens);
+	list_print(&labels);
+	list_print(&tokens);
 	
-	freeList(&labels);
-	freeList(&tokens);
+	list_destroy(&labels);
+	list_destroy(&tokens);
 	
 	//=================================
 	
-	init(&vm);
+	struct VM vm = vm_init();
 	
 	do {
 		vm.RAM[24576] = keys;
-		if(vm.state == OK){
-			vm.state = compute(&vm);
+		if(vm.state == VM_OK){
+			vm_next(&vm);
 			
 			//VM state feedback
 			switch(vm.state){
-				case INVALID_COMP: printf("Error: Invalid comp opcode\n"); break;
-				case INVALID_ADDRESS: printf("Error: Invalid address is being accessed\n"); break;
-				case CPU_HALT: printf("Cpu has ran out of instructions\n");
+				case VM_INVALID_COMP: printf("Error: Invalid comp opcode\n"); break;
+				case VM_INVALID_ADDRESS: printf("Error: Invalid address is being accessed\n"); break;
+				case VM_CPU_HALT: printf("Cpu has ran out of instructions\n");
 				default: break;
 			}
 		}
@@ -74,6 +67,5 @@ int main(int argc, char** argv){
 			break;
 		}
 	}while(1);
-	getchar();
 	return 0;
 }

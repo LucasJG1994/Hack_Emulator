@@ -1,12 +1,12 @@
 #include "vm.h"
 
-const int palette[2] = {0,255}; //Color palette for the screen
+const int PALETTE[2] = {0,255}; //Color palette for the screen
 //Look up table for the individual bits, 16 bit width
-const int table[16] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
-int keys;
+const int TABLE[16] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
+int KEYS;
 
 //Constructs the opcode.
-void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
+void vm_make_opcode(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
 	u16 instruction = 0;
 	instruction |= _jump;
 	instruction |= (_dest << 3);
@@ -15,36 +15,39 @@ void setInstr(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp){
 	_vm->ROM[_vm->IP++] = instruction;
 }
 
-void setValue(vm_t* _vm, u16 value){
-	_vm->ROM[_vm->IP++] = value;
+void vm_put_word(vm_t* _vm, u16 word){
+	_vm->ROM[_vm->IP++] = word;
 }
 
-u16 getInstr(vm_t* _vm){
-	return _vm->ROM[_vm->IP++];
-}
-
-void reset(vm_t* _vm){
+void vm_reset(vm_t* _vm){
 	_vm->IP = 0;
 }
 
-void init(vm_t* _vm){
-	_vm->window = mfb_open_ex("Hack Computer", w_width, w_height, WF_RESIZABLE);
+struct VM vm_init(){
+	struct VM vm = {NULL};
+	vm.window = mfb_open_ex("Hack Computer", w_width, w_height, WF_RESIZABLE);
 	
-	if(_vm->window == NULL){
+	if(vm.window == NULL){
 		printf("Failed to open window\n");
 		exit(0);
 	}
 	
-	mfb_set_keyboard_callback(_vm->window, keyboard);
-	mfb_set_char_input_callback(_vm->window, char_input);
+	mfb_set_keyboard_callback(vm.window, mfb_keyboard);
+	mfb_set_char_input_callback(vm.window, mfb_char_input);
+	vm.state = VM_OK;
+	return vm;
 }
 
-void keyboard(struct Window* window, Key key, KeyMod mod, bool isPressed){
+void vm_cleanup(vm_t* _vm){ //Not sure where to use this function.
+	mfb_close(_vm->window);
+}
+
+void mfb_keyboard(struct Window* window, Key key, KeyMod mod, bool isPressed){
 	if(isPressed){
-		//Do nothing with (keys)
+		//Do nothing with (KEYS)
 	}
 	else{
-		keys = 0;
+		KEYS = 0;
 	}
 	if(key == KB_KEY_ESCAPE){
 		mfb_close(window);
@@ -52,12 +55,12 @@ void keyboard(struct Window* window, Key key, KeyMod mod, bool isPressed){
 	}
 }
 
-void char_input(struct Window* window, unsigned int charCode){
-	keys = charCode;
+void mfb_char_input(struct Window* window, unsigned int charCode){
+	KEYS = charCode;
 }
 
-int compute(vm_t* _vm){
-	if(_vm->IP > 32767) return CPU_HALT;
+void vm_next(vm_t* _vm){
+	if(_vm->IP > 32767) return VM_CPU_HALT;
 	
 	u16 instruction = _vm->ROM[_vm->IP++]; //Fectch OPcode
 	
@@ -72,7 +75,8 @@ int compute(vm_t* _vm){
 		
 		if((comp & 0x40) || (dest & 0x01))
 			if((_vm->A < 0) || (_vm->A > 24576)){
-				return INVALID_ADDRESS;
+				_vm->state = VM_INVALID_ADDRESS;
+				return;
 			}
 		
 		switch(comp){
@@ -105,7 +109,8 @@ int compute(vm_t* _vm){
 			case D_o_A: _vm->BUS = _vm->D | _vm->A; break;
 			case D_o_M: _vm->BUS = _vm->D | _vm->RAM[_vm->A]; break;
 			default:
-				return INVALID_COMP;
+				_vm->state = VM_INVALID_COMP;
+				return;
 		}
 		
 		switch(dest){
@@ -167,11 +172,10 @@ int compute(vm_t* _vm){
 			if(_vm->A >= 16384 && _vm->A < 24576){
 				for(int i = 0; i < 16; i++){
 					_vm->buffer[(_vm->A - 16384) * 16 + i] = MFB_RGB(
-					palette[(_vm->RAM[_vm->A] & table[i]) >> i],
-					palette[(_vm->RAM[_vm->A] & table[i]) >> i],
-					palette[(_vm->RAM[_vm->A] & table[i]) >> i]);
+						PALETTE[(_vm->RAM[_vm->A] & TABLE[i]) >> i],
+						PALETTE[(_vm->RAM[_vm->A] & TABLE[i]) >> i],
+						PALETTE[(_vm->RAM[_vm->A] & TABLE[i]) >> i]);
 				}
 			}
 	}
-	return OK;
 }

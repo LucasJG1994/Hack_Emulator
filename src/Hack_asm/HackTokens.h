@@ -1,22 +1,30 @@
 #ifndef HackTokens_h
 #define HackTokens_h
 
-#define TK_AT 1   //@
-#define TK_A 2    //A
-#define TK_D 3    //D
-#define TK_M 4    //M
-#define TK_0 5    //0
-#define TK_1 6    //1
-#define TK_EQ 7   //=
-#define TK_ADD 8  //+
-#define TK_SUB 9  //-
-#define TK_ID 10  //(
-#define TK_LABEL 11  //)
-#define TK_AND 12 //&
-#define TK_OR 13  //|
-#define TK_BAN 14 //!
-#define TK_NUM 15 //number
-#define TK_SEMI 16 //;
-#define TK_EOF -1
+typedef enum{
+	TK_AT = 1, TK_A, TK_D, TK_M, TK_0, TK_1, TK_EQ, TK_ADD, TK_SUB,
+	TK_ID, TK_LABEL, TK_AND, TK_OR, TK_BAN, TK_NUM, TK_SEMI, TK_EOF = -1
+}tok;
+
+typedef struct{
+	const char* key;
+	const int value;
+}token_map;
+
+/*token_map tok_map[] = {
+	{"@", TK_AT},
+	{"A", TK_A},
+	{"D", TK_D},
+	{"M", TK_M},
+	{"0", TK_0},
+	{"1", TK_1},
+	{"=", TK_EQ},
+	{"+", TK_ADD},
+	{"-", TK_SUB},
+	{"&", TK_AND},
+	{"|", TK_OR},
+	{"!", TK_BAN},
+	{";", TK_SEMI}
+};*/
 
 #endif

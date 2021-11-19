@@ -8,17 +8,16 @@
 #define DFA_MAX_HEIGHT 4
 
 //Scanner Error Codes
-#define SCAN_OK 0
-#define STRING_TOO_LONG_ERROR 1
-#define INVALID_ID_ERROR 2
+typedef enum{
+	SCAN_OK, SCAN_STRING_TOO_LONG_ERROR, SCAN_INVALID_ID_ERROR
+}scanner_codes;
 
 //DFA states
-#define START_STATE 0
-#define NUMBER 1
-#define IDENTIFIER 2
-#define ERROR_STATE 3
+typedef enum{
+	DFA_START_STATE, DFA_NUMBER_STATE, DFA_ID_STATE, DFA_ERROR_STATE
+}dfa_states;
 
-typedef struct{
+typedef struct hackScanner{
 	const char* begin;
 	const char* start;
 	const char* current;
@@ -26,14 +25,14 @@ typedef struct{
 	int error;
 }hackScanner_t;
 
-typedef struct{
+typedef struct hackToken{
 	int type;
 	const char* lexeme;
 	int length;
 	int line;
 }hackToken_t;
 
-typedef struct{
+typedef struct DFA{
 	int table[DFA_MAX_WIDTH][DFA_MAX_HEIGHT];
 	int state;
 }DFA_t; //A DFA is used to check if ID names/numbers are valid.
@@ -44,7 +43,7 @@ typedef struct Node{
 	struct Node* prev;
 }Node_t;
 
-typedef struct{
+typedef struct list{
 	struct Node* head;
 	struct Node* tail;
 	int length;
@@ -55,29 +54,30 @@ typedef struct{
 int stringcmp(const char* lex1, int len1, const char* lex2, int len2);
 
 //Scanner function
-void initS(hackScanner_t* scan, const char* source);
-void resetS(hackScanner_t* scan);
-void advS(hackScanner_t* scan);
-char peekS(hackScanner_t* scan);
-char curS(hackScanner_t* scan);
-int matchS(hackScanner_t* scan, char c);
-hackToken_t makeToken(int type, const char* lexeme, int length, int line);
+struct hackScanner hackScanner_init(const char* source);
+void hackScanner_reset(hackScanner_t* scan);
+void hackScanner_adv(hackScanner_t* scan);
+char hackScanner_peek(hackScanner_t* scan);
+char hackScanner_cur(hackScanner_t* scan);
+int hackScanner_match(hackScanner_t* scan, char c);
+hackToken_t hackScanner_newToken(int type, const char* lexeme, int length, int line);
 void printToken(hackToken_t token);
 
 //Gets all the labels first before going through the code.
 //Helps with the differentiating between variable and label.
-list_t getHackLabels(hackScanner_t* scan);
-list_t lexer(hackScanner_t* scan, list_t* labels);
+list_t hackScanner_labels(hackScanner_t* scan);
+list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels);
 
 //DFA functions
-void initDFA(DFA_t* dfa);
-void checkID(DFA_t* dfa, const char* lexeme, int length);
+struct DFA DFA_init();
+void DFA_run(DFA_t* dfa, const char* lexeme, int length);
 
 //List functions
-void push(list_t* list, hackToken_t token);
-hackToken_t pop(list_t* list);
-int find(list_t* list, const char* lexeme, int length);
-void printList(list_t* list);
-void freeList(list_t* list);
+struct list list_new();
+void list_push(list_t* list, hackToken_t token);
+hackToken_t list_pop(list_t* list);
+int list_find(list_t* list, const char* lexeme, int length);
+void list_print(list_t* list);
+void list_destroy(list_t* list);
 
 #endif
