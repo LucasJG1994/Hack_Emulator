@@ -33,7 +33,14 @@ int main(int argc, char** argv){
 	if(scan.error != SCAN_OK){
 		list_destroy(&labels);
 		list_destroy(&tokens);
-		printf("Error in code");
+		switch(scan.error){
+			case SCAN_STRING_TOO_LONG_ERROR:
+				printf("Error: String too long\n"); break;
+			case SCAN_INVALID_ID_ERROR:
+				printf("Error: Invalid ID\n"); break;
+			case SCAN_KEYWORD_ERROR:
+				printf("Error: Keyword error\n"); break;
+		}
 		return 0;
 	}
 	
@@ -48,7 +55,7 @@ int main(int argc, char** argv){
 	struct VM vm = vm_init();
 	
 	do {
-		vm.RAM[24576] = keys;
+		vm.RAM[24576] = KEYS;
 		if(vm.state == VM_OK){
 			vm_next(&vm);
 			
