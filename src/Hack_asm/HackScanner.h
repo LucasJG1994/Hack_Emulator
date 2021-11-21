@@ -4,8 +4,8 @@
 #include "HackTokens.h"
 #include "vm.h"
 
-#define DFA_MAX_WIDTH 0xff
-#define DFA_MAX_HEIGHT 50
+#define DFA_MAX_WIDTH 256
+#define DFA_MAX_HEIGHT 62
 
 //Scanner Error Codes
 typedef enum{
