@@ -14,6 +14,10 @@ typedef enum{
 }scanner_codes;
 
 //DFA states
+//The states that have no name to them.
+//such as DFA_<num>_STATE will be converted to DFA_ID_STATE.
+//Since if an input "AR" was given. That should be recognized as
+//an identifier.
 typedef enum{
 	DFA_START_STATE, DFA_NUMBER_STATE, DFA_ID_STATE, DFA_ERROR_STATE,
 	DFA_A_STATE, DFA_D_STATE, DFA_M_STATE, DFA_MD_STATE, DFA_AM_STATE,
