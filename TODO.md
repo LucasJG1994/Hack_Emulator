@@ -29,7 +29,6 @@ The VM was drawing past the screen's max buffer size which was
 rewriting the data in the ROM which was placed after the 
 screen's buffer within the struct (vm_t).
 
-FIX compiler error!!!
 
 (MUST BE CAREFUL WHEN ACCESSING MEMORY, NO ARRAY BOUNDS CHECKING).
 

@@ -134,13 +134,14 @@
 
 #define LIST_FUNCTIONS(T)\
 	List_init(T) List_push(T) List_pop_last(T)\
-	List_first(T) List_top(T) List_bottom(T) List_destroy(T)
+	List_pop_first(T) List_top(T) List_bottom(T) List_destroy(T)
 
 #define LIST_HEADER(T)\
 	Node_new(T) List_new(T)\
 	T##_List_t T##_List_init();\
 	void T##_List_push(T##_List_t* list, T data);\
-	T T##_List_pop(T##_List_t* list);\
+	T T##_List_pop_last(T##_List_t* list);\
+	T T##_List_pop_first(T##_List_t* list);\
 	T T##_List_remove(T##_List_t* list);\
 	T T##_List_top(T##_List_t* list);\
 	T T##_List_bottom(T##_List_t* list);\
