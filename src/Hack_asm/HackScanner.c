@@ -1,5 +1,29 @@
 #include "HackScanner.h"
 
+//This macro generates the needed functions and structures to create a list
+//of tokens. Macro exists in list.h
+LIST_FUNCTIONS(TOKEN);
+
+//The states that have no name to them.
+//such as DFA_<num>_STATE will be converted to DFA_ID_STATE.
+//Since if an input "AR" was given. That should be recognized as
+//an identifier.
+const int DFA_NAMELESS_STATES[DFA_NAMELESS_STATE_LENGTH] = {
+	DFA_11_STATE, DFA_13_STATE, DFA_30_STATE, DFA_31_STATE, DFA_33_STATE,
+	DFA_34_STATE, DFA_36_STATE, DFA_37_STATE, DFA_38_STATE, DFA_39_STATE,
+	DFA_42_STATE, DFA_44_STATE, DFA_45_STATE, DFA_46_STATE, DFA_47_STATE,
+	DFA_49_STATE, DFA_50_STATE, DFA_53_STATE, DFA_56_STATE, DFA_58_STATE,
+	DFA_60_STATE
+};
+
+int TOKEN_List_find(TOKEN_List_t* list, const char* lexeme, int length){
+	TOKEN_Node_t* current = list->head;
+	while(current != NULL){
+		if(string_cmp(current->data.lexeme, current->data.length, lexeme, length)) return 1;
+	}
+	return 0;
+} 
+
 int string_cmp(const char* lex1, int len1, const char* lex2, int len2){
 	if(len1 != len2) return 0;
 	
@@ -246,6 +270,13 @@ void DFA_run(DFA_t* dfa, const char* lexeme, int length){
 	for(int i = 0; i < length; i++){
 		dfa->state = dfa->table [lexeme[i]] [dfa->state];
 	}
+	
+	for(int i = 0; i < DFA_NAMELESS_STATE_LENGTH; i++){
+		if(dfa->state == DFA_NAMELESS_STATES[i]){
+			dfa->state = DFA_ID_STATE;
+			break;
+		}
+	}
 }
 
 hackToken_t hackScanner_newToken(int type, const char* lexeme, int length, int line){
@@ -257,9 +288,9 @@ void printToken(hackToken_t token){
 	printf("( %d, %.*s, %d )", token.type, token.length, token.lexeme, token.line);
 }
 
-list_t hackScanner_labels(hackScanner_t* scan){
+TOKEN_List_t hackScanner_labels(hackScanner_t* scan){
 	int length = 0;
-	list_t list = list_new();
+	TOKEN_List_t list = TOKEN_List_init();
 	DFA_t dfa = DFA_init();
 	
 	while(hackScanner_cur(scan) != '\0'){
@@ -269,7 +300,7 @@ list_t hackScanner_labels(hackScanner_t* scan){
 			
 			while(!hackScanner_match(scan,')')){
 				if(hackScanner_cur(scan) == '\0'){
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_INVALID_ID_ERROR;
 					return list;
 				}
@@ -278,7 +309,7 @@ list_t hackScanner_labels(hackScanner_t* scan){
 			
 			length = scan->current - scan->start;
 			if(length >= 49){
-				list_destroy(&list);
+				TOKEN_List_destroy(&list);
 				scan->error = SCAN_STRING_TOO_LONG_ERROR;
 				return list;
 			}
@@ -286,11 +317,11 @@ list_t hackScanner_labels(hackScanner_t* scan){
 			DFA_run(&dfa, scan->start, length);
 			
 			if(dfa.state == DFA_ID_STATE){
-				list_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
+				TOKEN_List_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
 				dfa.state = DFA_START_STATE;
 			}
 			else{
-				list_destroy(&list);
+				TOKEN_List_destroy(&list);
 				scan->error = SCAN_INVALID_ID_ERROR;
 				return list;
 			}
@@ -302,22 +333,22 @@ list_t hackScanner_labels(hackScanner_t* scan){
 	return list;
 }
 
-list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
+TOKEN_List_t hackScanner_lexer(hackScanner_t* scan, TOKEN_List_t* labels){
 	int length = 0;
-	list_t list = list_new(); //Used to store the tokens.
+	TOKEN_List_t list = TOKEN_List_init(); //Used to store the tokens.
 	DFA_t dfa = DFA_init();
 	
 	while(hackScanner_cur(scan) != '\0'){
 		switch(hackScanner_cur(scan)){
-			case '0': list_push(&list, hackScanner_newToken(TK_0, "0", 1, scan->line)); break;
-			case '1': list_push(&list, hackScanner_newToken(TK_1, "1", 1, scan->line)); break;
-			case '=': list_push(&list, hackScanner_newToken(TK_EQ, "=", 1, scan->line)); break;
-			case '+': list_push(&list, hackScanner_newToken(TK_ADD, "+", 1, scan->line)); break;
-			case '-': list_push(&list, hackScanner_newToken(TK_SUB, "-", 1, scan->line)); break;
-			case '|': list_push(&list, hackScanner_newToken(TK_OR, "|", 1, scan->line)); break;
-			case '&': list_push(&list, hackScanner_newToken(TK_AND, "&", 1, scan->line)); break;
-			case '!': list_push(&list, hackScanner_newToken(TK_BAN, "!", 1, scan->line)); break;
-			case ';': list_push(&list, hackScanner_newToken(TK_SEMI, ";", 1, scan->line)); break;
+			case '0': TOKEN_List_push(&list, hackScanner_newToken(TK_0, "0", 1, scan->line)); break;
+			case '1': TOKEN_List_push(&list, hackScanner_newToken(TK_1, "1", 1, scan->line)); break;
+			case '=': TOKEN_List_push(&list, hackScanner_newToken(TK_EQ, "=", 1, scan->line)); break;
+			case '+': TOKEN_List_push(&list, hackScanner_newToken(TK_ADD, "+", 1, scan->line)); break;
+			case '-': TOKEN_List_push(&list, hackScanner_newToken(TK_SUB, "-", 1, scan->line)); break;
+			case '|': TOKEN_List_push(&list, hackScanner_newToken(TK_OR, "|", 1, scan->line)); break;
+			case '&': TOKEN_List_push(&list, hackScanner_newToken(TK_AND, "&", 1, scan->line)); break;
+			case '!': TOKEN_List_push(&list, hackScanner_newToken(TK_BAN, "!", 1, scan->line)); break;
+			case ';': TOKEN_List_push(&list, hackScanner_newToken(TK_SEMI, ";", 1, scan->line)); break;
 			
 			case '(':
 				hackScanner_adv(scan);
@@ -325,7 +356,7 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 			
 				while(!hackScanner_match(scan,')')){
 					if(hackScanner_cur(scan) == '\0'){
-						list_destroy(&list);
+						TOKEN_List_destroy(&list);
 						scan->error = SCAN_INVALID_ID_ERROR;
 						return list;
 					}
@@ -334,7 +365,7 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 			
 				length = scan->current - scan->start;
 				if(length >= 49){
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_STRING_TOO_LONG_ERROR;
 					return list;
 				}
@@ -342,18 +373,18 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 				DFA_run(&dfa, scan->start, length);
 				
 				if(dfa.state == DFA_ID_STATE){
-					list_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
+					TOKEN_List_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
 					dfa.state = DFA_START_STATE;
 				}
 				else{
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_INVALID_ID_ERROR;
 					return list;
 				}
 				break;
 			
 			case '@':
-				list_push(&list, hackScanner_newToken(TK_AT, "@", 1, scan->line));
+				TOKEN_List_push(&list, hackScanner_newToken(TK_AT, "@", 1, scan->line));
 				hackScanner_adv(scan);
 				
 				scan->start = scan->current;
@@ -365,24 +396,47 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 				
 				length = (scan->current - scan->start) + 1;
 				if(length >= 49){
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_STRING_TOO_LONG_ERROR;
 					return list;
 				}
 				
 				DFA_run(&dfa, scan->start, length);
 				
-				if(dfa.state == DFA_NUMBER_STATE) list_push(&list, hackScanner_newToken(TK_NUM, scan->start, length, scan->line));
+				if(dfa.state == DFA_NUMBER_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_NUM, scan->start, length, scan->line));
 				else if(dfa.state == DFA_ID_STATE){
-					if(list_find(labels, scan->start, length)){
-						list_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
+					if(TOKEN_List_find(labels, scan->start, length)){
+						TOKEN_List_push(&list, hackScanner_newToken(TK_LABEL, scan->start, length, scan->line));
 					}
 					else{
-						list_push(&list, hackScanner_newToken(TK_ID, scan->start, length, scan->line));
+						TOKEN_List_push(&list, hackScanner_newToken(TK_ID, scan->start, length, scan->line));
 					}
 				}
+				else if(dfa.state == DFA_SP_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_SP, scan->start, length, scan->line));
+				else if(dfa.state == DFA_LCL_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_LCL, scan->start, length, scan->line));
+				else if(dfa.state == DFA_ARG_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_ARG, scan->start, length, scan->line));
+				else if(dfa.state == DFA_THIS_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_THIS, scan->start, length, scan->line));
+				else if(dfa.state == DFA_THAT_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_THAT, scan->start, length, scan->line));
+				else if(dfa.state == DFA_SCREEN_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_SCREEN, scan->start, length, scan->line));
+				else if(dfa.state == DFA_KBD_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_KBD, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R0_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R0, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R1_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R1, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R2_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R2, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R3_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R3, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R4_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R4, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R5_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R5, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R6_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R6, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R7_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R7, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R8_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R8, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R9_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R9, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R10_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R10, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R11_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R11, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R12_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R12, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R13_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R13, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R14_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R14, scan->start, length, scan->line));
+				else if(dfa.state == DFA_R15_STATE) TOKEN_List_push(&list, hackScanner_newToken(TK_R15, scan->start, length, scan->line));
 				else{
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_INVALID_ID_ERROR;
 					return list;
 				}
@@ -402,7 +456,7 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 				
 				length = (scan->current - scan->start) + 1;
 				if(length >= 49){
-					list_destroy(&list);
+					TOKEN_List_destroy(&list);
 					scan->error = SCAN_STRING_TOO_LONG_ERROR;
 					return list;
 				}
@@ -413,22 +467,22 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 					DFA_run(&dfa, scan->start, length);
 					
 					switch(dfa.state){
-						case DFA_A_STATE: list_push(&list, hackScanner_newToken(TK_A, scan->start, length, scan->line)); break;
-						case DFA_D_STATE: list_push(&list, hackScanner_newToken(TK_D, scan->start, length, scan->line)); break;
-						case DFA_M_STATE: list_push(&list, hackScanner_newToken(TK_M, scan->start, length, scan->line)); break;
-						case DFA_AM_STATE: list_push(&list, hackScanner_newToken(TK_AM, scan->start, length, scan->line)); break;
-						case DFA_AD_STATE: list_push(&list, hackScanner_newToken(TK_AD, scan->start, length, scan->line)); break;
-						case DFA_MD_STATE: list_push(&list, hackScanner_newToken(TK_MD, scan->start, length, scan->line)); break;
-						case DFA_AMD_STATE: list_push(&list, hackScanner_newToken(TK_AMD, scan->start, length, scan->line)); break;
-						case DFA_JGT_STATE: list_push(&list, hackScanner_newToken(TK_JGT, scan->start, length, scan->line)); break;
-						case DFA_JEQ_STATE: list_push(&list, hackScanner_newToken(TK_JEQ, scan->start, length, scan->line)); break;
-						case DFA_JGE_STATE: list_push(&list, hackScanner_newToken(TK_JGE, scan->start, length, scan->line)); break;
-						case DFA_JLT_STATE: list_push(&list, hackScanner_newToken(TK_JLT, scan->start, length, scan->line)); break;
-						case DFA_JNE_STATE: list_push(&list, hackScanner_newToken(TK_JNE, scan->start, length, scan->line)); break;
-						case DFA_JLE_STATE: list_push(&list, hackScanner_newToken(TK_JLE, scan->start, length, scan->line)); break;
-						case DFA_JMP_STATE: list_push(&list, hackScanner_newToken(TK_JMP, scan->start, length, scan->line)); break;
+						case DFA_A_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_A, scan->start, length, scan->line)); break;
+						case DFA_D_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_D, scan->start, length, scan->line)); break;
+						case DFA_M_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_M, scan->start, length, scan->line)); break;
+						case DFA_AM_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_AM, scan->start, length, scan->line)); break;
+						case DFA_AD_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_AD, scan->start, length, scan->line)); break;
+						case DFA_MD_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_MD, scan->start, length, scan->line)); break;
+						case DFA_AMD_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_AMD, scan->start, length, scan->line)); break;
+						case DFA_JGT_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JGT, scan->start, length, scan->line)); break;
+						case DFA_JEQ_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JEQ, scan->start, length, scan->line)); break;
+						case DFA_JGE_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JGE, scan->start, length, scan->line)); break;
+						case DFA_JLT_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JLT, scan->start, length, scan->line)); break;
+						case DFA_JNE_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JNE, scan->start, length, scan->line)); break;
+						case DFA_JLE_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JLE, scan->start, length, scan->line)); break;
+						case DFA_JMP_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_JMP, scan->start, length, scan->line)); break;
 						default:
-							list_destroy(&list);
+							TOKEN_List_destroy(&list);
 							scan->error = SCAN_KEYWORD_ERROR;
 							return list;
 					}
@@ -436,90 +490,6 @@ list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels){
 		}
 		hackScanner_adv(scan);
 	}
-	list_push(&list, hackScanner_newToken(TK_EOF, "", 0, 0));
+	TOKEN_List_push(&list, hackScanner_newToken(TK_EOF, "", 0, 0));
 	return list;
-}
-
-struct list list_new(){
-	struct list new_list;
-	new_list.head = NULL;
-	new_list.tail = NULL;
-	new_list.length = 0;
-	return new_list;
-}
-
-void list_push(list_t* list, hackToken_t token){
-	if(list->head == NULL){
-		struct Node* tmp = (struct Node*)calloc(1, sizeof(struct Node));
-		tmp->token = token;
-		tmp->next = NULL;
-		tmp->prev = NULL;
-		list->head = tmp;
-		list->tail = tmp;
-		list->length = 1;
-		return;
-	}
-	else{
-		struct Node* tmp;
-		list->tail->next = (struct Node*)calloc(1, sizeof(struct Node));
-		list->tail->next->token = token;
-		list->tail->next->next = NULL;
-		tmp = list->tail;
-		list->tail = list->tail->next;
-		list->tail->prev = tmp;
-		list->length++;
-	}
-}
-
-hackToken_t list_pop(list_t* list){
-	hackToken_t token = {NULL};
-	struct Node* tmp;
-	if(list->head == NULL) return token;
-	
-	token = list->head->token;
-	tmp = list->head;
-	list->head = list->head->next;
-	free(tmp);
-	
-	return token;
-}
-
-hackToken_t list_peek(list_t* list){
-	hackToken_t token = {NULL};
-	if(list->head == NULL) return token;
-	
-	token = list->head->token;
-	return token;
-}
-
-int list_find(list_t* list, const char* lexeme, int length){
-	struct Node* current = list->head;
-	while(current != NULL){
-		if(string_cmp(lexeme, length, current->token.lexeme, current->token.length)) return 1;
-		current = current->next;
-	}
-	return 0;
-}
-
-void list_print(list_t* list){
-	struct Node* current = list->head;
-	printf("[ ");
-	while(current != NULL){
-		printToken(current->token);
-		current = current->next;
-	}
-	printf(" ]\n");
-}
-
-void list_destroy(list_t* list){
-	struct Node* tmp;
-	if(list->head == NULL) return;
-	
-	list->tail = NULL;
-	while(list->head != NULL){
-		tmp = list->head;
-		list->head = list->head->next;
-		free(tmp);
-	}
-	list->head = NULL;
 }

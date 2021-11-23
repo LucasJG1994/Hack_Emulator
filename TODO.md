@@ -12,15 +12,24 @@ Create an assembler for the hack assembler.
 		- Create list functions for storing the tokens. (DONE)
 
 	- Parser
-		- implement parser functions.
-		- Create 2 Lists, 1 for label declaration and the other for lost labels.
-		- Create Parser Rules.
+		- [x] implement parser functions.
+		- [ ] Create 2 Lists, 1 for label declaration and the other for lost labels.
+		- [x] Create Parser Rules.
+		- [ ] Print error messages
+		
+### CHANGES
+The linked lists are now a macro which is used as a template.
+The macro accepts a type and generates the required .h and .c code.
+Really helps with code repetition. Found in **list.h**
+
 
 ### ISSUES
 ROM array is somehow being edited during code execution. (FIXED)
 The VM was drawing past the screen's max buffer size which was
 rewriting the data in the ROM which was placed after the 
 screen's buffer within the struct (vm_t).
+
+FIX compiler error!!!
 
 (MUST BE CAREFUL WHEN ACCESSING MEMORY, NO ARRAY BOUNDS CHECKING).
 

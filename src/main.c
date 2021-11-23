@@ -1,5 +1,5 @@
-#include "vm.h"
 #include "HackScanner.h"
+#include "HackParser.h"
 
 int main(int argc, char** argv){
 	UpdateState state;
@@ -8,31 +8,32 @@ int main(int argc, char** argv){
 		TEST CODE
 	*/
 	//=================================
-	const char* code = "(end)\n\
-	(foo1)\
-	@end\n\
-	d;jmp\n\
-	@foo\n\
-	a=0\n\
-	amd=-1\n\
-	@54321\0";
+	
+	const char* code = "\n\
+	@screen\n\
+	d=a\n\
+	(loop)\n\
+	m=-1\n\
+	ad=d+1\n\
+	@loop\n\
+	0;jmp\n\0";
 	
 	struct hackScanner scan = hackScanner_init(code);
-	struct list labels = hackScanner_labels(&scan);
+	TOKEN_List_t labels = hackScanner_labels(&scan);
 	
 	if(scan.error != SCAN_OK){
-		list_destroy(&labels);
+		TOKEN_List_destroy(&labels);
 		printf("Invalid ID\n");
 		return 0;
 	}
 	
 	hackScanner_reset(&scan);
 	
-	struct list tokens = hackScanner_lexer(&scan, &labels);
+	TOKEN_List_t tokens = hackScanner_lexer(&scan, &labels);
 	
 	if(scan.error != SCAN_OK){
-		list_destroy(&labels);
-		list_destroy(&tokens);
+		TOKEN_List_destroy(&labels);
+		TOKEN_List_destroy(&tokens);
 		switch(scan.error){
 			case SCAN_STRING_TOO_LONG_ERROR:
 				printf("Error: String too long\n"); break;
@@ -44,11 +45,8 @@ int main(int argc, char** argv){
 		return 0;
 	}
 	
-	list_print(&labels);
-	list_print(&tokens);
-	
-	list_destroy(&labels);
-	list_destroy(&tokens);
+	TOKEN_List_destroy(&labels);
+	TOKEN_List_destroy(&tokens);
 	
 	//=================================
 	

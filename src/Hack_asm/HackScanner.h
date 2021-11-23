@@ -1,11 +1,13 @@
 #ifndef HackScanner_h
 #define HackScanner_h
 
+#include "list.h"
 #include "HackTokens.h"
 #include "vm.h"
 
 #define DFA_MAX_WIDTH 256
 #define DFA_MAX_HEIGHT 62
+#define DFA_NAMELESS_STATE_LENGTH 22
 
 //Scanner Error Codes
 typedef enum{
@@ -14,10 +16,6 @@ typedef enum{
 }scanner_codes;
 
 //DFA states
-//The states that have no name to them.
-//such as DFA_<num>_STATE will be converted to DFA_ID_STATE.
-//Since if an input "AR" was given. That should be recognized as
-//an identifier.
 typedef enum{
 	DFA_START_STATE, DFA_NUMBER_STATE, DFA_ID_STATE, DFA_ERROR_STATE,
 	DFA_A_STATE, DFA_D_STATE, DFA_M_STATE, DFA_MD_STATE, DFA_AM_STATE,
@@ -55,17 +53,10 @@ typedef struct DFA{
 	int state;
 }DFA_t; //A DFA is used to check if ID names/numbers are valid.
 
-typedef struct Node{
-	hackToken_t token;
-	struct Node* next;
-	struct Node* prev;
-}Node_t;
+//Don't want to write hackToken_t_List_<fn_name>(). name too long!!
+typedef hackToken_t TOKEN;
 
-typedef struct list{
-	struct Node* head;
-	struct Node* tail;
-	int length;
-}list_t;
+LIST_HEADER(TOKEN);
 
 //string function
 //Made this as an easy way to deal with string comparison.
@@ -84,21 +75,12 @@ void printToken(hackToken_t token);
 
 //Gets all the labels first before going through the code.
 //Helps with the differentiating between variable and label.
-list_t hackScanner_labels(hackScanner_t* scan);
-list_t hackScanner_lexer(hackScanner_t* scan, list_t* labels);
+TOKEN_List_t hackScanner_labels(hackScanner_t* scan);
+TOKEN_List_t hackScanner_lexer(hackScanner_t* scan, TOKEN_List_t* labels);
 
 //DFA functions
 struct DFA DFA_init();
 void DFA_fill_state(DFA_t* dfa, int state_to_fill, int dest_state);
 void DFA_run(DFA_t* dfa, const char* lexeme, int length);
-
-//List functions
-struct list list_new();
-void list_push(list_t* list, hackToken_t token);
-hackToken_t list_peek(list_t* list);
-hackToken_t list_pop(list_t* list);
-int list_find(list_t* list, const char* lexeme, int length);
-void list_print(list_t* list);
-void list_destroy(list_t* list);
 
 #endif

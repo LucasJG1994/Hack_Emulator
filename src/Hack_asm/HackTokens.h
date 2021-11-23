@@ -6,28 +6,9 @@ typedef enum{
 	TK_0, TK_1, TK_EQ, TK_ADD, TK_SUB, TK_ID, TK_LABEL, TK_AND,
 	TK_OR, TK_BAN, TK_NUM, TK_SEMI, TK_JGT, TK_JEQ, TK_JGE,
 	TK_JLT, TK_JNE, TK_JLE, TK_JMP, TK_SP, TK_LCL, TK_ARG, TK_THIS,
-	TK_THAT, TK_SCREEN, TK_KBD, TK_EOF = -1
+	TK_THAT, TK_SCREEN, TK_KBD, TK_R0, TK_R1, TK_R2, TK_R3, TK_R4, 
+	TK_R5, TK_R6, TK_R7, TK_R8, TK_R9, TK_R10, TK_R11, TK_R12, TK_R13, 
+	TK_R14, TK_R15, TK_EOF = -1
 }tok;
-
-typedef struct{
-	const char* key;
-	const int value;
-}token_map;
-
-/*token_map tok_map[] = {
-	{"@", TK_AT},
-	{"A", TK_A},
-	{"D", TK_D},
-	{"M", TK_M},
-	{"0", TK_0},
-	{"1", TK_1},
-	{"=", TK_EQ},
-	{"+", TK_ADD},
-	{"-", TK_SUB},
-	{"&", TK_AND},
-	{"|", TK_OR},
-	{"!", TK_BAN},
-	{";", TK_SEMI}
-};*/
 
 #endif
