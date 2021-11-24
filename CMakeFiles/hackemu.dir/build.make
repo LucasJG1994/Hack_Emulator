@@ -113,26 +113,11 @@ CMakeFiles/hackemu.dir/src/Hack_asm/HackScanner.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/hackemu.dir/src/Hack_asm/HackScanner.c.s"
 	C:\TDM-GCC-64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\src\Hack_asm\HackScanner.c -o CMakeFiles\hackemu.dir\src\Hack_asm\HackScanner.c.s
 
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj: CMakeFiles/hackemu.dir/flags.make
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj: CMakeFiles/hackemu.dir/includes_C.rsp
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj: src/Hack_asm/HackParser.c
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj: CMakeFiles/hackemu.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj"
-	C:\TDM-GCC-64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj -MF CMakeFiles\hackemu.dir\src\Hack_asm\HackParser.c.obj.d -o CMakeFiles\hackemu.dir\src\Hack_asm\HackParser.c.obj -c C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\src\Hack_asm\HackParser.c
-
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.i"
-	C:\TDM-GCC-64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\src\Hack_asm\HackParser.c > CMakeFiles\hackemu.dir\src\Hack_asm\HackParser.c.i
-
-CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.s"
-	C:\TDM-GCC-64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\src\Hack_asm\HackParser.c -o CMakeFiles\hackemu.dir\src\Hack_asm\HackParser.c.s
-
 CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj: CMakeFiles/hackemu.dir/flags.make
 CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj: CMakeFiles/hackemu.dir/includes_C.rsp
 CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj: lib/minifb/src/windows/WinMiniFB.c
 CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj: CMakeFiles/hackemu.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj"
 	C:\TDM-GCC-64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj -MF CMakeFiles\hackemu.dir\lib\minifb\src\windows\WinMiniFB.c.obj.d -o CMakeFiles\hackemu.dir\lib\minifb\src\windows\WinMiniFB.c.obj -c C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\lib\minifb\src\windows\WinMiniFB.c
 
 CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.i: cmake_force
@@ -148,7 +133,6 @@ hackemu_OBJECTS = \
 "CMakeFiles/hackemu.dir/src/main.c.obj" \
 "CMakeFiles/hackemu.dir/src/vm.c.obj" \
 "CMakeFiles/hackemu.dir/src/Hack_asm/HackScanner.c.obj" \
-"CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj" \
 "CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj"
 
 # External object files for target hackemu
@@ -157,14 +141,13 @@ hackemu_EXTERNAL_OBJECTS =
 hackemu.exe: CMakeFiles/hackemu.dir/src/main.c.obj
 hackemu.exe: CMakeFiles/hackemu.dir/src/vm.c.obj
 hackemu.exe: CMakeFiles/hackemu.dir/src/Hack_asm/HackScanner.c.obj
-hackemu.exe: CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj
 hackemu.exe: CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.obj
 hackemu.exe: CMakeFiles/hackemu.dir/build.make
 hackemu.exe: lib/minifb/libminifb.a
 hackemu.exe: CMakeFiles/hackemu.dir/linklibs.rsp
 hackemu.exe: CMakeFiles/hackemu.dir/objects1.rsp
 hackemu.exe: CMakeFiles/hackemu.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable hackemu.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable hackemu.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\hackemu.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

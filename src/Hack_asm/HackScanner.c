@@ -94,6 +94,7 @@ struct DFA DFA_init(){
 	dfa.table['D'][DFA_START_STATE] = DFA_D_STATE;
 	dfa.table['d'][DFA_START_STATE] = DFA_D_STATE;
 	dfa.table['M'][DFA_START_STATE] = DFA_M_STATE;
+	dfa.table['m'][DFA_START_STATE] = DFA_M_STATE;
 	dfa.table['R'][DFA_START_STATE] = DFA_13_STATE;
 	dfa.table['r'][DFA_START_STATE] = DFA_13_STATE;
 	dfa.table['K'][DFA_START_STATE] = DFA_30_STATE;
@@ -461,10 +462,10 @@ TOKEN_List_t hackScanner_lexer(hackScanner_t* scan, TOKEN_List_t* labels){
 					return list;
 				}
 				
-				printf("%.*s\n", length, scan->start);
-				
 				if(length > 0){
 					DFA_run(&dfa, scan->start, length);
+					
+					//printf("LEX: %.*s STATE: %d\n", length, scan->start, dfa.state);
 					
 					switch(dfa.state){
 						case DFA_A_STATE: TOKEN_List_push(&list, hackScanner_newToken(TK_A, scan->start, length, scan->line)); break;

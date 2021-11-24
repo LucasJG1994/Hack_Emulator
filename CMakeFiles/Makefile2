@@ -105,12 +105,12 @@ lib/minifb/clean: lib/minifb/CMakeFiles/multiple_windows.dir/clean
 CMakeFiles/hackemu.dir/all: lib/minifb/CMakeFiles/minifb.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target hackemu"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=1,2,3,4,5 "Built target hackemu"
 .PHONY : CMakeFiles/hackemu.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/hackemu.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/hackemu.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles 0
 .PHONY : CMakeFiles/hackemu.dir/rule
@@ -131,7 +131,7 @@ CMakeFiles/hackemu.dir/clean:
 lib/minifb/CMakeFiles/minifb.dir/all:
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\minifb.dir\build.make lib/minifb/CMakeFiles/minifb.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\minifb.dir\build.make lib/minifb/CMakeFiles/minifb.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=11,12,13,14,15 "Built target minifb"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=10,11,12,13,14 "Built target minifb"
 .PHONY : lib/minifb/CMakeFiles/minifb.dir/all
 
 # Build rule for subdir invocation for target.
@@ -157,7 +157,7 @@ lib/minifb/CMakeFiles/minifb.dir/clean:
 lib/minifb/CMakeFiles/noise.dir/all: lib/minifb/CMakeFiles/minifb.dir/all
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\noise.dir\build.make lib/minifb/CMakeFiles/noise.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\noise.dir\build.make lib/minifb/CMakeFiles/noise.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=18,19 "Built target noise"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=17,18 "Built target noise"
 .PHONY : lib/minifb/CMakeFiles/noise.dir/all
 
 # Build rule for subdir invocation for target.
@@ -183,7 +183,7 @@ lib/minifb/CMakeFiles/noise.dir/clean:
 lib/minifb/CMakeFiles/input_events.dir/all: lib/minifb/CMakeFiles/minifb.dir/all
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\input_events.dir\build.make lib/minifb/CMakeFiles/input_events.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\input_events.dir\build.make lib/minifb/CMakeFiles/input_events.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=7,8 "Built target input_events"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=6,7 "Built target input_events"
 .PHONY : lib/minifb/CMakeFiles/input_events.dir/all
 
 # Build rule for subdir invocation for target.
@@ -209,7 +209,7 @@ lib/minifb/CMakeFiles/input_events.dir/clean:
 lib/minifb/CMakeFiles/input_events_cpp.dir/all: lib/minifb/CMakeFiles/minifb.dir/all
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\input_events_cpp.dir\build.make lib/minifb/CMakeFiles/input_events_cpp.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\input_events_cpp.dir\build.make lib/minifb/CMakeFiles/input_events_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=9,10 "Built target input_events_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=8,9 "Built target input_events_cpp"
 .PHONY : lib/minifb/CMakeFiles/input_events_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -235,7 +235,7 @@ lib/minifb/CMakeFiles/input_events_cpp.dir/clean:
 lib/minifb/CMakeFiles/multiple_windows.dir/all: lib/minifb/CMakeFiles/minifb.dir/all
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\multiple_windows.dir\build.make lib/minifb/CMakeFiles/multiple_windows.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib\minifb\CMakeFiles\multiple_windows.dir\build.make lib/minifb/CMakeFiles/multiple_windows.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=16,17 "Built target multiple_windows"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\FUZEdevLG\Documents\GitHub\Hack_Emulator\CMakeFiles --progress-num=15,16 "Built target multiple_windows"
 .PHONY : lib/minifb/CMakeFiles/multiple_windows.dir/all
 
 # Build rule for subdir invocation for target.

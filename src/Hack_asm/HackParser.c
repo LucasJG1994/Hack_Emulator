@@ -3,9 +3,47 @@
 LIST_FUNCTIONS(Lab_Dec);
 LIST_FUNCTIONS(L_Lab);
 
+int Lab_Dec_find(Lab_Dec_List_t* list, const char* lex, int len){
+	Lab_Dec_Node_t* cur = list->head;
+	while(cur != NULL){
+		if(string_cmp(cur->data.string, cur->data.length, lex, len)) return cur->data.value;
+		cur = cur->next;
+	}
+	return -1;
+}
+
+L_Lab_Node_t* L_Lab_find(L_Lab_List_t* list, const char* lex, int len){
+	L_Lab_Node_t* cur = list->head;
+	while(cur != NULL){
+		if(string_cmp(cur->data.string, cur->data.length, lex, len)) return cur;
+	}
+	return NULL;
+}
+
+Lab_Dec make_label(const char* lexeme, int length, int value){
+	Lab_Dec tmp;
+	tmp.string = lexeme;
+	tmp.length = length;
+	tmp.value = value;
+	return tmp;
+}
+
+L_Lab make_lost_label(const char* lexeme, int length, int value){
+	L_Lab tmp;
+	tmp.string = lexeme;
+	tmp.length = length;
+	tmp.index = 0;
+	tmp.addr[tmp.index] = value;
+	tmp.index++;
+	return tmp;
+}
+
 hackParser_t hackParser_init(TOKEN_List_t* tokens){
 	hackParser_t parser = {NULL};
 	parser.tokens = tokens;
+	parser.labels = Lab_Dec_List_init();
+	parser.variables = Lab_Dec_List_init();
+	parser.lost = L_Lab_List_init();
 	parser.current = TOKEN_List_pop_first(parser.tokens);
 	return parser;
 }
@@ -51,7 +89,16 @@ void hackParser_run(hackParser_t* parser, vm_t* vm){
 			sprintf(string_buffer, "%.*s", parser->current.length, parser->current.lexeme);
 			switch(hackParser_cur(parser)){
 				case TK_NUM: vm_put_word(vm, atoi(string_buffer)); break;
-				case TK_ID: vm_put_word(vm, var_index++); break;
+				case TK_ID:
+					int ID = Lab_Dec_find(&parser->variables, parser->current.lexeme, parser->current.length);
+					if(ID == -1){
+						vm_put_word(vm, var_index);
+						Lab_Dec_List_push(&parser->variables, make_lable(parser->current.lexeme, parser->current.length, var_index++));
+					}
+					else{
+						vm_put_word(vm, ID);
+					}
+					break;
 				case TK_SP: vm_put_word(vm, 0); break;
 				case TK_LCL: vm_put_word(vm, 1); break;
 				case TK_ARG: vm_put_word(vm, 2); break;
@@ -75,6 +122,14 @@ void hackParser_run(hackParser_t* parser, vm_t* vm){
 				case TK_R13: vm_put_word(vm, 13); break;
 				case TK_R14: vm_put_word(vm, 14); break;
 				case TK_R15: vm_put_word(vm, 15); break;
+				case TK_LABEL:
+					int ID = Lab_Dec_find(&parser->labels, parser->current.lexeme, parser->current.length);
+					if(ID == -1){
+						L_Lab_Node_t* curNode = L_Lab_find(&parser->lost, parser->current.lexeme, parser->current.length);
+						if(curNode == NULL){
+							
+						}
+					}
 			}
 		}
 		else{

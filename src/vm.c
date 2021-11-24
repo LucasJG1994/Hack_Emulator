@@ -19,6 +19,10 @@ void vm_put_word(vm_t* _vm, u16 word){
 	_vm->ROM[_vm->IP++] = word;
 }
 
+void vm_adv(vm_t* _vm){
+	_vm->IP++;
+}
+
 void vm_reset(vm_t* _vm){
 	_vm->IP = 0;
 }

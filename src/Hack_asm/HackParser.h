@@ -34,6 +34,11 @@ typedef struct hackParser{
 	int error;
 }hackParser_t;
 
+//Function will be used for both labels and varaibles
+Lab_Dec make_label(const char* lexeme, int length, int value);
+L_Lab make_lost_label(const char* lexeme, int length, int value);
+
+//Parser functions
 hackParser_t hackParser_init(TOKEN_List_t* tokens);
 void hackParser_adv(hackParser_t* parser);
 int hackParser_cur(hackParser_t* parser);

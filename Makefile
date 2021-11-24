@@ -217,30 +217,6 @@ lib/minifb/src/windows/WinMiniFB.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/lib/minifb/src/windows/WinMiniFB.c.s
 .PHONY : lib/minifb/src/windows/WinMiniFB.c.s
 
-src/Hack_asm/HackParser.obj: src/Hack_asm/HackParser.c.obj
-.PHONY : src/Hack_asm/HackParser.obj
-
-# target to build an object file
-src/Hack_asm/HackParser.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.obj
-.PHONY : src/Hack_asm/HackParser.c.obj
-
-src/Hack_asm/HackParser.i: src/Hack_asm/HackParser.c.i
-.PHONY : src/Hack_asm/HackParser.i
-
-# target to preprocess a source file
-src/Hack_asm/HackParser.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.i
-.PHONY : src/Hack_asm/HackParser.c.i
-
-src/Hack_asm/HackParser.s: src/Hack_asm/HackParser.c.s
-.PHONY : src/Hack_asm/HackParser.s
-
-# target to generate assembly for a file
-src/Hack_asm/HackParser.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\hackemu.dir\build.make CMakeFiles/hackemu.dir/src/Hack_asm/HackParser.c.s
-.PHONY : src/Hack_asm/HackParser.c.s
-
 src/Hack_asm/HackScanner.obj: src/Hack_asm/HackScanner.c.obj
 .PHONY : src/Hack_asm/HackScanner.obj
 
@@ -330,9 +306,6 @@ help:
 	@echo ... lib/minifb/src/windows/WinMiniFB.obj
 	@echo ... lib/minifb/src/windows/WinMiniFB.i
 	@echo ... lib/minifb/src/windows/WinMiniFB.s
-	@echo ... src/Hack_asm/HackParser.obj
-	@echo ... src/Hack_asm/HackParser.i
-	@echo ... src/Hack_asm/HackParser.s
 	@echo ... src/Hack_asm/HackScanner.obj
 	@echo ... src/Hack_asm/HackScanner.i
 	@echo ... src/Hack_asm/HackScanner.s

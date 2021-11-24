@@ -29,6 +29,7 @@ void mfb_char_input(struct Window* window, unsigned int charCode);
 //VM functions
 void vm_make_opcode(vm_t* _vm, u8 _jump, u8 _dest, u8 _comp);
 void vm_put_word(vm_t* _vm, u16 word);
+void vm_adv(vm_t* _vm);
 void vm_next(vm_t* _vm);
 void vm_reset(vm_t* _vm);
 

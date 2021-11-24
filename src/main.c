@@ -1,5 +1,5 @@
 #include "HackScanner.h"
-#include "HackParser.h"
+//#include "HackParser.h"
 
 int main(int argc, char** argv){
 	UpdateState state;
