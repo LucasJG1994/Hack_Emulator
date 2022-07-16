@@ -20,7 +20,8 @@ add_executable (hackemu
         ${hackemu_SOURCE_DIR}/src/main.c
 	${hackemu_SOURCE_DIR}/src/vm.c
 	${hackemu_SOURCE_DIR}/src/Hack_asm/HackScanner.c
+	${hackemu_SOURCE_DIR}/src/Hack_asm/HackParser.c
 	${hackemu_SOURCE_DIR}/lib/minifb/src/windows/WinMiniFB.c
-)
+ "src/Hack_asm/HackTokens.c" "src/hash_table/hash_table_module.h" "src/hash_table/hash_table_module.c" "src/string/string_module.h" "src/string/string_module.c"   "src/symbol_table/symbol_table_singleton.h" "src/symbol_table/symbol_table_singleton.c")
 
 target_link_libraries(hackemu minifb)

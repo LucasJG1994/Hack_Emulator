@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\hackemu.dir/objects.a
-C:\TDM-GCC-64\bin\ar.exe qc CMakeFiles\hackemu.dir/objects.a @CMakeFiles\hackemu.dir\objects1.rsp
-C:\TDM-GCC-64\bin\g++.exe -Wl,--whole-archive CMakeFiles\hackemu.dir/objects.a -Wl,--no-whole-archive -o hackemu.exe -Wl,--out-implib,libhackemu.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\hackemu.dir\linklibs.rsp

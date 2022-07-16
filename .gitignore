@@ -55,3 +55,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+CMakeCache.txt
+.vs/
+hackemu.dir/
+Release/
+x64/
+
+*.vcxproj
+*.filters
+*.sln
+*.user

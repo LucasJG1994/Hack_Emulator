@@ -1,76 +1,63 @@
 #include "HackScanner.h"
-//#include "HackParser.h"
+#include "HackParser.h"
+#include "vm.h"
+#include "symbol_table/symbol_table_singleton.h"
+#include "hash_table/hash_table_module.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char** argv){
-	UpdateState state;
 	
 	/*
 		TEST CODE
 	*/
 	//=================================
-	
-	const char* code = "\n\
-	@screen\n\
-	d=a\n\
-	(loop)\n\
-	m=-1\n\
-	ad=d+1\n\
-	@loop\n\
-	0;jmp\n\0";
-	
-	struct hackScanner scan = hackScanner_init(code);
-	TOKEN_List_t labels = hackScanner_labels(&scan);
-	
-	if(scan.error != SCAN_OK){
-		TOKEN_List_destroy(&labels);
-		printf("Invalid ID\n");
-		return 0;
-	}
-	
-	hackScanner_reset(&scan);
-	
-	TOKEN_List_t tokens = hackScanner_lexer(&scan, &labels);
-	
-	if(scan.error != SCAN_OK){
-		TOKEN_List_destroy(&labels);
-		TOKEN_List_destroy(&tokens);
-		switch(scan.error){
-			case SCAN_STRING_TOO_LONG_ERROR:
-				printf("Error: String too long\n"); break;
-			case SCAN_INVALID_ID_ERROR:
-				printf("Error: Invalid ID\n"); break;
-			case SCAN_KEYWORD_ERROR:
-				printf("Error: Keyword error\n"); break;
+
+	if(argc == 2){	
+		FILE* fp;
+		long long int fp_length;
+
+		if (fopen_s(&fp, argv[1], "r") != 0) {
+			printf("Failed to load file...\n");
+			return 0;
 		}
-		return 0;
-	}
-	
-	TOKEN_List_destroy(&labels);
-	TOKEN_List_destroy(&tokens);
-	
-	//=================================
-	
-	struct VM vm = vm_init();
-	
-	do {
-		vm.RAM[24576] = KEYS;
-		if(vm.state == VM_OK){
-			vm_next(&vm);
-			
-			//VM state feedback
-			switch(vm.state){
-				case VM_INVALID_COMP: printf("Error: Invalid comp opcode\n"); break;
-				case VM_INVALID_ADDRESS: printf("Error: Invalid address is being accessed\n"); break;
-				case VM_CPU_HALT: printf("Cpu has ran out of instructions\n");
-				default: break;
-			}
+
+		fseek(fp, 0L, SEEK_END);
+		fp_length = ftell(fp);
+		fseek(fp, 0L, SEEK_SET);
+
+		const char* code = (const char*)calloc(fp_length + 1, sizeof(char));
+		if (code == NULL) {
+			printf("Failed to allocate memory for file...\n");
+			fclose(fp);
+			return 0;
 		}
+
+		fread(code, sizeof(char), fp_length, fp);
+		fclose(fp);
 		
-		state = mfb_update(vm.window, vm.buffer);
-		if(state != STATE_OK){
-			vm.window = NULL;
-			break;
+		symbol_table = hash_table_init();
+		if (symbol_table == NULL) {
+			printf("symbol_table is NULL\n");
+			return 0;
 		}
-	}while(1);
+
+		hs_init(code);
+		
+		//hp_init();
+		//hp_start();
+
+		//hp_init();
+		//hp_start();
+
+		//vm_init();
+		//vm_run();
+
+		hash_table_close(symbol_table);
+		free(code);
+	}
+	else {
+		printf("usage: hackemu.exe <file_name>.hack\n");
+	}
 	return 0;
 }
