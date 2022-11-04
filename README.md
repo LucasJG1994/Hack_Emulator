@@ -1,4 +1,4 @@
-#Hack Emulator
+# Hack Emulator
 A small emulator project for the Nand2Tetris Hack Computer.  
 
 **Usage**  
@@ -6,5 +6,5 @@ A small emulator project for the Nand2Tetris Hack Computer.
 hackemu example.bin
 ```
 
-#Important
+# Important
 The emulator by itself only reads **.bin** files and thus requires an assembler to assemble the Hack Language to binary. That will be done on a separate project.
