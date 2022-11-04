@@ -1,13 +1,12 @@
-Emulate the screen memory. (DONE)
+#Rebooting the project.
+This project has been stalled for quite a long time.  
+Instead I'll be building the Hack Emulator as a stand-alone project, the only file type it will read will be **.bin** files.  
+Which the Assembler **(A separate project)** will generate.
 
-Add Keyboard input. (DONE)
+#TODO modules
 
-Create an assembler for the hack assembler.
+[x] CPU module
+[x] VRAM module (want to put this in a separate thread)
+[] miniFB callback module (Mainly for keyboard support)
 
-Huge re-write has been done and new modules created 16/07/2022.  
-string module     				(new)      (tested)  
-hash table module   		    (new)      (testing)  
-scanner/tokenizer module 		(re-write) (not tested)  
-parser module					(re-write) (not tested)  
-VM module						(edited)   (not tested)  
 
