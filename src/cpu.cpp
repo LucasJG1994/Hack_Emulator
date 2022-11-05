@@ -7,15 +7,17 @@
 #define MODULE "CPU"
 #define M RAM[A]
 
-#define JGT(T,F) IP = (!ZR & !NG)? T : F
-#define JEQ(T,F) IP = (ZR & !NG) ? T : F
-#define JGE(T,F) IP = (ZR & !NG) ? T : F
-#define JLT(T,F) IP = (!ZR & NG) ? T : F
-#define JNE(T,F) IP = (!ZR & NG) ? T : F
-#define JLE(T,F) IP = (ZR & NG)  ? T : F
-#define JMP(T)   IP = T
+#define JGT(T,F) IP = (!ZR & !NG)? T*2 : F
+#define JEQ(T,F) IP = (ZR & !NG) ? T*2 : F
+#define JGE(T,F) IP = (ZR & !NG) ? T*2 : F
+#define JLT(T,F) IP = (!ZR & NG) ? T*2 : F
+#define JNE(T,F) IP = (!ZR & NG) ? T*2 : F
+#define JLE(T,F) IP = (ZR & NG)  ? T*2 : F
+#define JMP(T)   IP = T*2
 
 #define LOG(E) std::cout << "[ " << MODULE << " ] " << E << std::endl
+
+extern bool DEBUG;
 
 void cpu_init(const char* file){
 	if(file == nullptr) return;
@@ -31,7 +33,7 @@ void cpu_init(const char* file){
 	unsigned short* RAM = new unsigned short[32768];
 
 	//CPU Registers
-	unsigned short IP = 2;
+	unsigned short IP = 0;
 	unsigned short A = 0;
 	unsigned short D = 0;
 	
@@ -41,7 +43,8 @@ void cpu_init(const char* file){
 	std::thread vram_start(vram_init, RAM);
 
 	while(IP < rom->size){
-		//LOG("TEST " << IP);
+		if(DEBUG) LOG("DEBUG: " << IP << " " << A << " " << D << " " << M);
+
 		short i =  (rom->ctx[IP] << 8) | rom->ctx[IP+1]; IP+=2;
 		if((i & 0x8000) == 0){
 			A = i;
