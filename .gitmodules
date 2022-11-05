@@ -1,7 +1,3 @@
 [submodule "lib/minifb"]
 	path = lib/minifb
 	url = https://github.com/emoon/minifb.git
-
-[submodule "lib/Hack_Assembler"]
-	path = lib/Hack_Assembler
-	url = https://github.com/LucasJG1994/Hack_Assembler.git
