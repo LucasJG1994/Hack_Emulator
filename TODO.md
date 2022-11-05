@@ -5,8 +5,11 @@ Which the Assembler **(A separate project)** will generate.
 
 # TODO modules
 
-[x] CPU module
-[x] VRAM module (want to put this in a separate thread)
-[] miniFB callback module (Mainly for keyboard support)
+- [x] CPU module
+- [x] VRAM module (want to put this in a separate thread)
+- [ ] miniFB callback module (Mainly for keyboard support)
+
+- [ ] Emulator Crashes (Memory Access Violation)
+
 
 
