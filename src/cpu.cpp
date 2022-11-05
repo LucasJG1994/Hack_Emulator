@@ -9,10 +9,10 @@
 
 #define JGT(T,F) IP = (!ZR & !NG)? T*2 : F
 #define JEQ(T,F) IP = (ZR & !NG) ? T*2 : F
-#define JGE(T,F) IP = (ZR & !NG) ? T*2 : F
+#define JGE(T,F) IP = (ZR | !NG) ? T*2 : F
 #define JLT(T,F) IP = (!ZR & NG) ? T*2 : F
-#define JNE(T,F) IP = (!ZR & NG) ? T*2 : F
-#define JLE(T,F) IP = (ZR & NG)  ? T*2 : F
+#define JNE(T,F) IP = (!ZR | NG) ? T*2 : F
+#define JLE(T,F) IP = (ZR | NG)  ? T*2 : F
 #define JMP(T)   IP = T*2
 
 #define LOG(E) std::cout << "[ " << MODULE << " ] " << E << std::endl
@@ -40,21 +40,32 @@ void cpu_init(const char* file){
 	//CPU Bus
 	unsigned short BUS = 0;
 	
+	union {
+		struct {
+			unsigned char ia;
+			unsigned char ib;
+		};
+		unsigned short i;
+	};
+
 	std::thread vram_start(vram_init, RAM);
 
 	while(IP < rom->size){
-		if(DEBUG) LOG("DEBUG: " << IP << " " << A << " " << D << " " << M);
+		ib = rom->ctx[IP++];
+		ia = rom->ctx[IP++];
 
-		short i =  (rom->ctx[IP] << 8) | rom->ctx[IP+1]; IP+=2;
+		//IP += 2;
 		if((i & 0x8000) == 0){
 			A = i;
 			continue;
 		}
 		
-		char cmp = (i & 0x1fc0) >> 6;
-		char dst = (i & 0x0038) >> 3;
-		char jmp = (i & 0x0007) >> 0;
+		short cmp = (i & 0x1fc0) >> 6;
+		short dst = (i & 0x0038) >> 3;
+		short jmp = (i & 0x0007) >> 0;
 		
+		if (DEBUG) LOG("DEBUG: " << IP << " " << cmp << " " << dst << " " << jmp << " " << i);
+
 		switch (cmp) {
 			case 0b101010 : BUS = 0     ; break;
 			case 0b111111 : BUS = 1     ; break;
