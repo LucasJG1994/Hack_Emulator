@@ -46,6 +46,7 @@ ROM* rom_load(const char* file){
 	if(self->ctx == nullptr){
 		logging(MODULE, "Failed to allocate memory...");
 		fclose(fp);
+		delete self;
 		return nullptr;
 	}
 	self->size = length;

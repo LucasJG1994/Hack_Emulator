@@ -1,8 +1,8 @@
 #include "cpu.h"
-#include "log.h"
 #include "rom_loader.h"
 #include "vram.h"
 #include <thread>
+#include <iostream>
 
 #define MODULE "CPU"
 #define M RAM[A]
@@ -15,8 +15,7 @@
 #define JLE(T,F) IP = (ZR & NG)  ? T : F
 #define JMP(T)   IP = T
 
-//Shared variables with VRAM thread
-unsigned short RAM[32768] = { 0 };
+#define LOG(E) std::cout << "[ " << MODULE << " ] " << E << std::endl
 
 void cpu_init(const char* file){
 	if(file == nullptr) return;
@@ -24,23 +23,27 @@ void cpu_init(const char* file){
 	ROM* rom = rom_load(file);
 	
 	if(rom == nullptr){
-		logging(MODULE, "Failed to load ROM...");
+		LOG("Failed to load ROM...");
 		return;
 	}
 	
+	//CPU RAM
+	unsigned short* RAM = new unsigned short[32768];
+
 	//CPU Registers
-	unsigned short IP = 0;
+	unsigned short IP = 2;
 	unsigned short A = 0;
 	unsigned short D = 0;
 	
 	//CPU Bus
 	unsigned short BUS = 0;
 	
-	std::thread vram_start(vram_init);
-	
+	std::thread vram_start(vram_init, RAM);
+
 	while(IP < rom->size){
-		short i =  (rom->ctx[IP++] << 8) | rom->ctx[IP++];
-		if(i & 0x8000){
+		//LOG("TEST " << IP);
+		short i =  (rom->ctx[IP] << 8) | rom->ctx[IP+1]; IP+=2;
+		if((i & 0x8000) == 0){
 			A = i;
 			continue;
 		}
@@ -109,4 +112,5 @@ void cpu_init(const char* file){
 		}
 	}
 	vram_start.join();
+	delete[] RAM;
 }

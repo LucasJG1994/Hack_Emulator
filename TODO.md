@@ -9,7 +9,7 @@ Which the Assembler **(A separate project)** will generate.
 - [x] VRAM module (want to put this in a separate thread)
 - [ ] miniFB callback module (Mainly for keyboard support)
 
-- [ ] Emulator Crashes (Memory Access Violation)
-
+- [x] Emulator Crashes (Memory Access Violation)
+- [ ] Emulator Runs but **.bin** does not run correctly.
 
 
