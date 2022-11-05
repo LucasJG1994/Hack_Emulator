@@ -10,6 +10,8 @@ Which the Assembler **(A separate project)** will generate.
 - [ ] miniFB callback module (Mainly for keyboard support)
 
 - [x] Emulator Crashes (Memory Access Violation)
-- [ ] Emulator Runs but **.bin** does not run correctly.
+- [x] Emulator Runs but **.bin** does not run correctly.
+
+- [ ] Pong game failed to run properly (Emulator can run small code snippets).
 
 
