@@ -39,7 +39,7 @@ void cpu_init(const char* file){
 	std::thread vram_start(vram_init);
 	
 	while(IP < rom->size){
-		short i = rom->ctx[IP++] | (rom->ctx[IP++] << 8);
+		short i =  (rom->ctx[IP++] << 8) | rom->ctx[IP++];
 		if(i & 0x8000){
 			A = i;
 			continue;
