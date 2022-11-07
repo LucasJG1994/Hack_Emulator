@@ -5,13 +5,17 @@
 
 #define MODULE "VRAM"
 
-static char KEY = 0;
+static short KEY = 0;
 bool HALT = false;
 
 void keyboard(Window* w, Key k, KeyMod m, bool isPressed){
 	if(isPressed){
-		if(k == KB_KEY_ESCAPE) HALT = true;
 		KEY = k;
+		switch(k){
+			case KB_KEY_ESCAPE: HALT = true; break;
+			case KB_KEY_ENTER:
+			case KB_KEY_KP_ENTER: KEY = 128; break;
+		}
 	}
 	else KEY = 0;
 }
