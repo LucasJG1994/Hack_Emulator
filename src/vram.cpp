@@ -5,6 +5,17 @@
 
 #define MODULE "VRAM"
 
+static char KEY = 0;
+bool HALT = false;
+
+void keyboard(Window* w, Key k, KeyMod m, bool isPressed){
+	if(isPressed){
+		if(k == KB_KEY_ESCAPE) HALT = true;
+		KEY = k;
+	}
+	else KEY = 0;
+}
+
 void vram_init(unsigned short* RAM){
 	unsigned int palette[2] = { MFB_RGB(0, 0, 0), MFB_RGB(255, 255, 255) };
 	Window* win = mfb_open("HACK", 512, 256);
@@ -14,8 +25,14 @@ void vram_init(unsigned short* RAM){
 	}
 	
 	unsigned int* buffer = new unsigned int[512 * 256];
+
+	mfb_set_keyboard_callback(win, keyboard);
+
 	while(1){
 		
+		//Read Keyboard Input
+		RAM[24576] = KEY;
+
 		//Read VRAM data from RAM
 		for(int i = 0; i < 8192; i++){
 			buffer[(i * 16) + 0]  = palette[(RAM[16384 + i] & 0x0001) ? 1 : 0];
@@ -42,4 +59,5 @@ void vram_init(unsigned short* RAM){
 	
 	mfb_close(win);
 	delete[] buffer;
+	HALT = true;
 }

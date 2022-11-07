@@ -12,6 +12,7 @@ Which the Assembler **(A separate project)** will generate.
 - [x] Emulator Crashes (Memory Access Violation)
 - [x] Emulator Runs but **.bin** does not run correctly.
 
-- [ ] Pong game failed to run properly (Emulator can run small code snippets).
+- [x] Pong game failed to run properly (Emulator can run small code snippets).
 
-
+- [x] Added testing support with Nand2Tetris tools when Debug mode is enabled
+- [ ] Pong game runs way too fast to be playable. 
