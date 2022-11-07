@@ -5,7 +5,7 @@ A small emulator project for the Nand2Tetris Hack Computer.
 ```
 hackemu example.bin
 ```
-**Debugging mode**
+**Debugging mode**  
 The debugging mode exports a **test.out** file which you can use with your **.tst** scripts on Nand2Tetris CPU Emulator.
 ```
 hackemu -d example.bin
