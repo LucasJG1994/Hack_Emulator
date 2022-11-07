@@ -12,4 +12,4 @@ hackemu -d example.bin
 ```
 
 # Important
-The emulator by itself only reads **.bin** files and thus requires an assembler to assemble the Hack Language to binary. That will be done on a separate project.
+The emulator by itself only reads **.bin** files and thus requires an assembler to assemble the Hack Language to binary. You can get the Assembler from here https://github.com/LucasJG1994/Hack_Assembler.git
